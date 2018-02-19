@@ -44,7 +44,7 @@ function ratesToClusters(rates) {
                             price: rate.rate_price,
                             capabilities: _.map(rate.capabilities, (description, code) => {
                                 return  {
-                                    code: code.replace(/\[|\]/g, ''),
+                                    code: code.replace(/\[|\]/g, '').split(/[ ,]+/),
                                     description: description,
                                     category: 'SOME_VALUE'
                                 };
@@ -59,7 +59,7 @@ function ratesToClusters(rates) {
                             additional_information : {
                                 rate_codes: rate.rate_codes,
                                 acriss: rate.vehicle.acriss,
-                                capabilities_codes: Object.keys(rate.capabilities).map((code) => code.replace(/\[|\]/g, ''))
+                                capabilities_codes: Object.keys(rate.capabilities).map((code) => code.replace(/\[|\]/g, '').split(/[ ,]+/))
                             }                                
                         };
                     }),
