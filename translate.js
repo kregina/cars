@@ -34,33 +34,35 @@ function ratesToClusters(rates) {
                 return {
                     company_id: companyCode,
                     vehicle: rates[0].vehicle,
-                    rates: _.map(rates.sort((rate) => rate.rate_price.daily.amount), (rate) => {
-                        return {
-                            ids: [
-                                rate.availability_id + '|' + rate.rate_id
-                            ],
-                            default_rate: 'SOME_VALUE',
-                            price: rate.rate_price,
-                            capabilities: _.map(rate.capabilities, (description, code) => {
-                                return  {
-                                    code: code.replace(/\[|\]/g, '').split(/[ ,]+/),
-                                    description: description,
-                                    category: 'SOME_VALUE'
-                                };
-                            }),
-                            additional_daily_price: {
-                                amount: rate.rate_price.daily.amount - rates[0].rate_price.daily.amount,
-                                currency: {
-                                    code: rate.rate_price.daily.currency.code,
-                                    prefix: rate.rate_price.daily.currency.prefix
-                                }
-                            },
-                            additional_information : {
-                                rate_codes: rate.rate_codes,
-                                acriss: rate.vehicle.acriss,
-                                capabilities_codes: Object.keys(rate.capabilities).map((code) => code.replace(/\[|\]/g, '').split(/[ ,]+/))
-                            }                                
-                        };
+                    rates: rates
+                        .sort(function(a, b){return a - b})
+                        .map((rate) => {
+                            return {
+                                ids: [
+                                    rate.availability_id + '|' + rate.rate_id
+                                ],
+                                default_rate: 'SOME_VALUE',
+                                price: rate.rate_price,
+                                capabilities: _.map(rate.capabilities, (description, code) => {
+                                    return  {
+                                        code: code.replace(/\[|\]/g, '').split(/[ ,]+/),
+                                        description: description,
+                                        category: 'SOME_VALUE'
+                                    };
+                                }),
+                                additional_daily_price: {
+                                    amount: rate.rate_price.daily.amount - rates[0].rate_price.daily.amount,
+                                    currency: {
+                                        code: rate.rate_price.daily.currency.code,
+                                        prefix: rate.rate_price.daily.currency.prefix
+                                    }
+                                },
+                                additional_information : {
+                                    rate_codes: rate.rate_codes,
+                                    acriss: rate.vehicle.acriss,
+                                    capabilities_codes: Object.keys(rate.capabilities).map((code) => code.replace(/\[|\]/g, '').split(/[ ,]+/))
+                                }                                
+                            };
                     }),
                     suggested: 'SOME_VALUE'
                 };
