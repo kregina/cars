@@ -35,7 +35,6 @@ function ratesToClusters(rates) {
                     company_id: companyCode,
                     vehicle: rates[0].vehicle,
                     rates: _.map(rates, (rate) => {
-                        _.orderBy(rate.rate_price.daily.amount, ['desc'])
                         return {
                             ids: [
                                 rate.availability_id + '|' + rate.rate_id
@@ -50,10 +49,10 @@ function ratesToClusters(rates) {
                                 };
                             }),
                             additional_daily_price: {
-                                amount: 'SOME_VALUE',
+                                amount: rate.rate_price.daily.amount - rates[0].rate_price.daily.amount,
                                 currency: {
-                                    code: 'SOME_VALUE',
-                                    prefix: 'SOME_VALUE'
+                                    code: rate.rate_price.daily.currency.code,
+                                    prefix: rate.rate_price.daily.currency.prefix
                                 }
                             },
                             additional_information : {
