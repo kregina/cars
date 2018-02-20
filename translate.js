@@ -30,11 +30,11 @@ function ratesToClusters(rates) {
                 baggage_big: 'SOME_VALUE',
                 baggage_small: 'SOME_VALUE'
             }, 
-            companies: _.map(companies, (rates, companyCode) => {
+            companies: _.map(companies, (rates, companyCode) => {                
                 return {
                     company_id: companyCode,
                     vehicle: rates[0].vehicle,
-                    rates: _.map(rates, (rate) => {
+                    rates: _.map(rates.sort((rate) => rate.rate_price.daily.amount), (rate) => {
                         return {
                             ids: [
                                 rate.availability_id + '|' + rate.rate_id
